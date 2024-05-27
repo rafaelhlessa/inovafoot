@@ -12,6 +12,20 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('managers', ManagerController::class);
+
 Route::apiResource('teams', TeamController::class);
+Route::get('teams/{team}/teams', [TeamController::class, 'show'])->name('teams.show');
+
 Route::apiResource('players', PlayerController::class);
+
 Route::apiResource('championship', ChampionshipController::class);
+
+
+
+Route::get('championship/{championship}/teams', [ChampionshipController::class, 'teams']);
+
+Route::get('championship/{championship}/players', [ChampionshipController::class, 'players']);
+
+Route::get('championship/{championship}/managers', [ChampionshipController::class, 'managers']);
+
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Team;
+use Inertia\Inertia;
 
 class TeamController extends Controller
 {
@@ -11,7 +13,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        $teams = Team::all();
+        return response()->json($teams);
     }
 
     /**
@@ -27,7 +30,10 @@ class TeamController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $team = Team::findOrfail($id);
+        return Inertia::render('Team/Show', [
+            'team' => $team,
+        ]);
     }
 
     /**
@@ -35,7 +41,12 @@ class TeamController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $team = Team::findOrfail($id);
+        $team->update([
+            'manager_id' => $request['manager_id'],
+        ]);
+
+        return response()->json($team);
     }
 
     /**

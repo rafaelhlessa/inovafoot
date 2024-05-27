@@ -21,7 +21,15 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $manager = Manager::create([
+            'name' => $request->name,
+        ]);
+
+        return response()->json($manager, 201);
     }
 
     /**
